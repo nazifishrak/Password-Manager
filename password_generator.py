@@ -1,4 +1,5 @@
 from random import randint as randint
+import pyperclip
 """
 Generates A Strong Password with given number of letters symbols and numbers. 
 """
@@ -49,6 +50,8 @@ def generate_password():
     password = ""
     for i in password_letters:
         password = password + i
+
+    pyperclip.copy(password)
         
 
 

@@ -12,12 +12,17 @@ def save():
     website = website_entry.get()
     username = username_entry.get()
     password = password_entry.get()
-    output = messagebox.askyesno(title=website, message=f"These are the details entered for {website}\n username/email: {username} \n password: {password}\n Are you sure you want to continue?")
-    if output:
-        with open("data.txt","a") as data:
-            data.write(f"{website} | {username} | {password} \n")
-            website_entry.delete(0,END)
-            password_entry.delete(0,END)
+    
+
+    if len(website)==0 or len(username) ==0 or len(password) ==0:
+        messagebox.showinfo(title="Invalid fields",message="Some fields are mepty")
+    else:
+        output = messagebox.askyesno(title=website, message=f"These are the details entered for {website}\n username/email: {username} \n password: {password}\n Are you sure you want to continue?")
+        if output:
+            with open("data.txt","a") as data:
+                data.write(f"{website} | {username} | {password} \n")
+                website_entry.delete(0,END)
+                password_entry.delete(0,END)
 
 
 window = Tk()

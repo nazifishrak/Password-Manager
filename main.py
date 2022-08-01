@@ -1,6 +1,6 @@
 from tkinter import *
 from password_generator import generate_password
-
+from tkinter import messagebox
 FONT = ("Century Gothic", 10, "normal")
 
 def gen_pass():
@@ -12,11 +12,13 @@ def save():
     website = website_entry.get()
     username = username_entry.get()
     password = password_entry.get()
+    output = messagebox.askyesno(title=website, message=f"These are the details entered for {website}\n username/email: {username} \n password: {password}\n Are you sure you want to continue?")
+    if output:
+        with open("data.txt","a") as data:
+            data.write(f"{website} | {username} | {password} \n")
+            website_entry.delete(0,END)
+            password_entry.delete(0,END)
 
-    with open("data.txt","a") as data:
-        data.write(f"{website} | {username} | {password} \n")
-        website_entry.delete(0,END)
-        password_entry.delete(0,END)
 
 window = Tk()
 window.minsize(width=500, height=500)

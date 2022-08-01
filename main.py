@@ -7,6 +7,17 @@ def gen_pass():
     password_entry.delete(0,END)
     password_entry.insert(0,generate_password())
 
+
+def save():
+    website = website_entry.get()
+    username = username_entry.get()
+    password = password_entry.get()
+
+    with open("data.txt","a") as data:
+        data.write(f"{website} | {username} | {password} \n")
+        website_entry.delete(0,END)
+        password_entry.delete(0,END)
+
 window = Tk()
 window.minsize(width=500, height=500)
 window.title("Password Manager")
@@ -31,6 +42,7 @@ website_entry = Entry(width=45, font=FONT)
 website_entry.grid(row=1, column=1, columnspan=2)
 
 username_entry = Entry(width=45, font=FONT)
+username_entry.insert(0, "nzfishrak60@gmail.com")
 username_entry.grid(row=2, column=1, columnspan=2)
 
 password_entry = Entry(width=28, font=FONT)
@@ -40,7 +52,7 @@ password_entry.grid(row=3, column=1, columnspan=1)
 generate_password_button = Button(text= "Generate Password", width=15,command=gen_pass)
 generate_password_button.grid(row=3,column=2, columnspan=1)
 
-add_button = Button(width=45, text="Add")
+add_button = Button(width=45, text="Add", command = save)
 add_button.grid(row=4, column=1, columnspan=2)
 
 

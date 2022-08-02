@@ -12,14 +12,19 @@ def search():
     If not found it shows an error message box
     """
     searched_value = website_entry.get()
-    with open("data.json", "r") as data:
-        data_dict: dict = json.load(data)
-
+    try:
+        with open("data.json", "r") as data:
+            data_dict: dict = json.load(data)
+    except FileNotFoundError:
+        with open("data.json", "w") as data:
+            json.dump({},data)
+            messagebox.showinfo(title="No file found",message="The file didn't exist before. Please add credentials and search again")
+    else:
         # data_dict = {key:val for (key,val) in data_dict.items() if key ==searched_value}
         retrieved_value:dict = data_dict.get(searched_value)
         if retrieved_value is not None:
-            messagebox.showinfo(title="Your credentials", message=f"Username: {retrieved_value['username']}\n Password: {retrieved_value['password']}")
             pyperclip.copy(retrieved_value['password'])
+            messagebox.showinfo(title="Your credentials", message=f"Username: {retrieved_value['username']}\n Password: {retrieved_value['password']}")
         else:
             messagebox.showinfo(title="Info Not Found", message=f"Credentials for {searched_value} doesn't exist")
 
@@ -45,7 +50,7 @@ def save():
 
     if len(website) == 0 or len(username) == 0 or len(password) == 0:
         messagebox.showinfo(title="Invalid fields",
-                            message="Some fields are mepty")
+                            message="Some fields are empty")
     else:
         output = messagebox.askyesno(
             title=website, message=f"These are the details entered for {website}\n username/email: {username} \n password: {password}\n Are you sure you want to continue?")

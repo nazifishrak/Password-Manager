@@ -1,0 +1,1 @@
+pyperclip.copy(retrieved_value['password'])

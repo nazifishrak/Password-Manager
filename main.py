@@ -6,11 +6,17 @@ FONT = ("Century Gothic", 10, "normal")
 
 
 def gen_pass():
+    """
+    Generates a password in the password entry field
+    """
     password_entry.delete(0, END)
     password_entry.insert(0, generate_password())
 
 
 def save():
+    """
+    Saves the data inserted to the json file and clears the entry boxes
+    """
     website = website_entry.get()
     username = username_entry.get()
     password = password_entry.get()
@@ -27,14 +33,14 @@ def save():
             title=website, message=f"These are the details entered for {website}\n username/email: {username} \n password: {password}\n Are you sure you want to continue?")
         if output:
 
-            try:
+            try: #Trying to open the json file if it exists
                 with open("data.json", 'r') as data:
-                    data_dict: dict = json.load(data)
-                    data_dict.update(new_data)
-                with open("data.json", 'w') as data:
-                    json.dump(data_dict,data,indent=4)
+                    data_dict: dict = json.load(data) # loads ther json data as a dict
+                    data_dict.update(new_data) # adds a new element to the dict
+                with open("data.json", 'w') as data: #Write Mode needed to dump
+                    json.dump(data_dict,data,indent=4) # overrides the old json file with the new updated dict (json equivalent format)
 
-            except FileNotFoundError:
+            except FileNotFoundError: # If file isn't found we create a json file and add the data to it
                 with open("data.json", "w") as data:
                     json.dump(new_data, data, indent=4)
 
@@ -42,16 +48,19 @@ def save():
             password_entry.delete(0, END)
 
 
-window = Tk()
-window.minsize(width=500, height=500)
-window.title("Password Manager")
-window.config(padx=100, pady=100)
+window = Tk() #Creating root window
+window.minsize(width=500, height=500) # Setting minimum size of the window
+window.title("Password Manager") #Setting window title
+window.config(padx=100, pady=100) # Added padding to window
 
-logo = PhotoImage(file="./logo.png")
+logo = PhotoImage(file="./logo.png") #created a photoImage object from a raw photo file
 
+
+
+###Creating a canvas and added an image to appx the centre of the canvas
 canvas = Canvas(height=250, width=189, highlightthickness=0)
 canvas.create_image(125, 100, image=logo)
-canvas.grid(row=0, column=1)
+canvas.grid(row=0, column=1) #Positioned the canvas using tkinter grid convention
 
 # LABELS-------------------------------
 website_label = Label(text="Website", font=FONT)

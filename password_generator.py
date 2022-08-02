@@ -51,7 +51,7 @@ def generate_password():
     for i in password_letters:
         password = password + i
 
-    pyperclip.copy(password)
+    pyperclip.copy(password) #Copies password to the clipboard
         
 
 

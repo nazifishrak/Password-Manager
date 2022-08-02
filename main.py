@@ -2,8 +2,22 @@ from tkinter import *
 from password_generator import generate_password
 from tkinter import messagebox
 import json
+import pyperclip
 FONT = ("Century Gothic", 10, "normal")
 
+
+def search():
+    searched_value = website_entry.get()
+    with open("data.json", "r") as data:
+        data_dict: dict = json.load(data)
+
+        # data_dict = {key:val for (key,val) in data_dict.items() if key ==searched_value}
+        retrieved_value:dict = data_dict.get(searched_value)
+        if retrieved_value is not None:
+            messagebox.showinfo(title="Your credentials", message=f"Username: {retrieved_value['username']}\n Password: {retrieved_value['password']}")
+            pyperclip.copy(retrieved_value['password'])
+        else:
+            messagebox.showinfo(title="Info Not Found", message=f"Credentials for {searched_value} doesn't exist")
 
 def gen_pass():
     """
@@ -71,8 +85,8 @@ password_label = Label(text="Password", font=FONT)
 password_label.grid(row=3, column=0, columnspan=1)
 
 # ENTRIES ------------------------------------
-website_entry = Entry(width=45, font=FONT)
-website_entry.grid(row=1, column=1, columnspan=2)
+website_entry = Entry(width=28, font=FONT)
+website_entry.grid(row=1, column=1, columnspan=1)
 
 username_entry = Entry(width=45, font=FONT)
 username_entry.insert(0, "nzfishrak60@gmail.com")
@@ -88,6 +102,9 @@ generate_password_button.grid(row=3, column=2, columnspan=1)
 
 add_button = Button(width=45, text="Add", command=save)
 add_button.grid(row=4, column=1, columnspan=2)
+
+search_button = Button(text="Search", width=15, command=search)
+search_button.grid(row=1, column=2, columnspan=1)
 
 
 window.mainloop()

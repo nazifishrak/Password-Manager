@@ -7,6 +7,10 @@ FONT = ("Century Gothic", 10, "normal")
 
 
 def search():
+    """
+    Searches for a given website if in the json file it shows the message box  with the corresponding password and user name with the password copied to the clipboard
+    If not found it shows an error message box
+    """
     searched_value = website_entry.get()
     with open("data.json", "r") as data:
         data_dict: dict = json.load(data)
